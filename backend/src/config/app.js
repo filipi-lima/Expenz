@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "../modules/User/user.route.js";
+import errorHandling from "../middlewares/errorHandling.js";
 
 const app = express()
 
@@ -10,5 +11,8 @@ app.use(express.json())
 
 // Routes
 app.use("/user", userRouter)
+
+// error Handling
+app.use(errorHandling)
 
 export default app;
