@@ -1,5 +1,9 @@
 import User from "./user.model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const userRegistration = async (data) => {
     const { email, password } = data;
@@ -24,6 +28,41 @@ const userRegistration = async (data) => {
     };
 };
 
+const userLogin = async (data) => {
+    const { email, password } = data;
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user) {
+        const error = new Error("Usuário não encontrado");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    if (!validPassword) {
+        const error = new Error("Senha inválida");
+        error.statusCode = 401;
+        throw error;
+    }
+
+    const SECRET = process.env.SECRET;
+    const PAYLOAD = { id: user._id, name: user.name };
+
+    const token = jwt.sign(PAYLOAD, SECRET, { expiresIn: "3h" });
+
+    return {
+        token,
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+        },
+    };
+};
+
 export default {
     userRegistration,
+    userLogin,
 };

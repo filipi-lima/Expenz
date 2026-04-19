@@ -41,10 +41,7 @@ const userSchema = new mongoose.Schema(
             select: false,
             required: true,
         },
-        income: {
-            incomeSchema,
-            default: () => ({}),
-        },
+        income: incomeSchema,
     },
     {
         timestamps: true,

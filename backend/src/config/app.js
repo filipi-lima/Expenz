@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 // Routes
-app.use("/user", userRouter)
+app.use("/users", userRouter)
 
 // error Handling
 app.use(errorHandling)

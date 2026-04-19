@@ -10,6 +10,17 @@ const userRegistration = async (req, res, next) => {
     }
 }
 
+const userLogin = async (req, res, next) => {
+    try {
+        const { token, user } = await userService.userLogin(req.body)
+
+        res.status(200).json({ token, user })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export default {
-    userRegistration
+    userRegistration,
+    userLogin
 }
