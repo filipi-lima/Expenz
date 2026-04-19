@@ -2,8 +2,11 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const authentication = (token) => (req, res, next) => {
+const authentication = () => (req, res, next) => {
     try {
+        const authHeader = req.headers["authentication"]
+        const token = authHeader && authHeader.split(" ")[1]
+        
         if (!token) {
             return res
                 .status(401)

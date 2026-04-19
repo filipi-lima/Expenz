@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 
-const validate = (schema) => (req, res, next) => {
+const validation = (schema) => (req, res, next) => {
     try {
         schema.parse(req.body);
         next();
@@ -12,4 +12,4 @@ const validate = (schema) => (req, res, next) => {
     }
 };
 
-export default validate;
+export default validation;
