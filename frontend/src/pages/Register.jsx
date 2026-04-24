@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoPerson } from "react-icons/go";
 import { AiOutlineMail } from "react-icons/ai";
 import { GoLock } from "react-icons/go";
+import { GoUnlock } from "react-icons/go";
 import fetchApi from "../services/fetchApi.js";
 import { useState } from "react";
 
@@ -36,6 +37,7 @@ const registerUserFormSchema = z.object({
 });
 
 function Register() {
+    const [ShowPassword, setShowPassword] = useState(false);
     const [error, setError] = useState({});
     const navigate = useNavigate();
     const {
@@ -106,9 +108,20 @@ function Register() {
 
                 <div>
                     <div className="password__container">
-                        <GoLock className="password icon" />
+                        {ShowPassword ? (
+                            <GoUnlock
+                                className="password icon"
+                                onClick={() => setShowPassword(!ShowPassword)}
+                            />
+                        ) : (
+                            <GoLock
+                                className="password icon"
+                                onClick={() => setShowPassword(!ShowPassword)}
+                            />
+                        )}
+                        
                         <input
-                            type="password"
+                            type={ShowPassword ? "text" : "password"}
                             className="password__input"
                             placeholder="Senha"
                             {...register("password")}
