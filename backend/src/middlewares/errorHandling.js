@@ -1,6 +1,7 @@
 export default async (error, req, res, next) => {
     const statusCode = error.statusCode || 500
     const message = statusCode === 500 ? "Server Internal Error" : error.message
+    const errorType = error.type || "server"
     
     console.error(`
         [ERROR]
@@ -8,5 +9,5 @@ export default async (error, req, res, next) => {
         error: ${message} 
     `)
 
-    res.status(statusCode).json({ message })
+    res.status(statusCode).json({ message, errorType })
 }
