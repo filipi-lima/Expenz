@@ -26,7 +26,13 @@ function Home() {
         handleAuth();
     }, [navigate]);
 
-    return <h1>Home</h1>;
+    return (
+        <main>
+            <header>
+                <h1>Expenz</h1>
+            </header>
+        </main>
+    );
 }
 
 export default Home;
